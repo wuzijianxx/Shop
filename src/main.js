@@ -25,8 +25,12 @@ Vue.http.options.emulateJSON = true;
 Vue.http.options.headers = {
   'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
 };
+//导入格式化时间的插件
+import moment from 'moment'
 
-
+Vue.filter('dataFormat',function (dataStr,pattern="YYYY-MM-DD HH:mm:ss") {
+  return moment(dataStr).format(pattern)
+  })
 
 
 var vm=new Vue({
