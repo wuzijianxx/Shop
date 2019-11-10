@@ -3,10 +3,11 @@ import Vue from 'vue'
 
 import app from './app.vue'
 //获取  Mint-UI 组件
-import { Header, Swipe, SwipeItem } from 'mint-ui';
+import { Header, Swipe, SwipeItem,Button } from 'mint-ui';
 Vue.component(Header.name, Header);
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
+Vue.component(Button.name, Button);
 import './lib/mui/css/mui.css'
 import './lib/mui/css/icons-extra.css'
 //导入vue-router 路由

@@ -9,11 +9,16 @@
     <hr />
 
     <div class="content" v-html="newsinfo.content"></div>
+ 
+    <combox :id="id"></combox>
+
   </div>
 </template>
 
 
 <script>
+import comment from '../subcomponents/comment.vue'
+
 import { Toast } from "mint-ui";
 export default {
   data() {
@@ -35,6 +40,9 @@ export default {
               }
           })
       }
+  },
+  components:{
+      'combox':comment
   }
 };
 </script>
