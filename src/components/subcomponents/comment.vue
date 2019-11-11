@@ -10,8 +10,8 @@
       <div class="cmt-item" v-for="(item,index) in comments" :key="index">
         <div class="cmt-title">
           <span>第{{index+1}}楼</span>
-          <span>用户:{{item.username}}</span>
-          <span>发表时间:{{item.comDate | dataFormat}}</span>
+          <span>用户:{{item.user_name}}</span>
+          <span>发表时间:{{item.add_time | dataFormat}}</span>
         </div>
         <div class="cmt-body">{{item.content=="" ? '此用户很懒,嘛都没说' : item.content}}</div>
       </div>
@@ -37,13 +37,13 @@ export default {
   methods: {
     getNewsCom() {
       this.$http
-        .get("getnewscom?newsId=" + this.id + "&pageIdx=" + this.pageIndex)
+        .get("api/getcomments/" + this.id + "?pageindex=" + this.pageIndex)
         .then(result => {
-          if (result.body.status === 1) {
+          if (result.body.status === 0) {
             Indicator.open("加载中...");
             setTimeout(() => {
               Indicator.close();
-              this.comments = this.comments.concat(result.body.comments);
+              this.comments = this.comments.concat(result.body.message);
             }, 500);
           } else {
             Toast("没有评论了哟~");
@@ -59,12 +59,12 @@ export default {
         return Toast("评论内容不能为空");
       }
       this.$http
-        .post("addnewscom?newsId=" + this.id, {
+        .post("api/postcomment/" + this.id, {
           content: this.msg
         })
         .then(result => {
-          if (result.body.status === 1) {
-            this.comments.unshift({ username:"匿名用户",comDate: new Date(), content: this.msg.trim() });
+          if (result.body.status === 0) {
+            this.comments.unshift({ user_name:"匿名用户", content: this.msg.trim() });
             this.msg = "";
           }else{
               Toast("发表评论失败");

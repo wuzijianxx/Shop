@@ -3,7 +3,7 @@
     <h4 class="title">{{newsinfo.title}}</h4>
     <p class="subtitle">
       <span>发表时间:{{newsinfo.add_time | dataFormat}}</span>
-      <span>点击:{{newsinfo.clicked}}</span>
+      <span>点击:{{newsinfo.click}}</span>
     </p>
 
     <hr />
@@ -32,9 +32,9 @@ export default {
   },
   methods:{
       getNewsInfo(){
-          this.$http.get('getnewsdetail?newsId='+this.id).then(result =>{
-              if (result.body.status === 1) {
-                  this.newsinfo =result.body.news
+          this.$http.get('api/getnew/'+this.id).then(result =>{
+              if (result.body.status === 0) {
+                  this.newsinfo =result.body.message[0];
               }else{
                   Toast("获取失败!");
               }

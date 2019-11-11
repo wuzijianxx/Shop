@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="newlist-container">
     <ul class="mui-table-view">
       <li class="mui-table-view-cell mui-media" v-for="(item,index) in newsList" :key="index">
         <router-link :to="'/home/newsinfo/'+item.id">
@@ -8,7 +8,7 @@
             <h5>{{ item.title }}</h5>
             <p class="mui-ellipsis">
               <span>发表时间:{{item.add_time | dataFormat}}</span>
-              <span>点击:{{item.clicked}}</span>
+              <span>点击:{{item.click}}</span>
             </p>
           </div>
         </router-link>
@@ -30,13 +30,15 @@ export default {
   },
   methods: {
     getNewsList() {
-      this.$http.get('getnews').then(result => {
-        if (result.body.status === 1) {
+      this.$http.get('api/getnewslist').then(result => {
+        if (result.body.status === 0) {
         //   if (!result.body.news) {
         //     Toast("没有更多的新闻了~~");
         //     return;
         //   }
-          this.newsList = result.body.news;
+          
+          this.newsList = result.body.message;
+          console.log(result.body.news);
         //   this.pageIdx++;
         } else {
           Toast("获取失败!");
@@ -59,6 +61,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.newlist-container{
+    padding-bottom: 50px;
+    position: relative;
 .mui-table-view {
   li {
     .mui-ellipsis {
@@ -69,4 +75,6 @@ export default {
     }
   }
 }
+}
+
 </style>

@@ -2,7 +2,7 @@
   <div>
     <mt-swipe :auto="4000">
       <mt-swipe-item v-for="(item,index) in SwiperImage" :key="index">
-        <img :src="item" />
+        <img :src="item.img" />
       </mt-swipe-item>
     </mt-swipe>
     <ul class="mui-table-view mui-grid-view mui-grid-9">
@@ -60,9 +60,9 @@ export default {
   },
   methods: {
     getLunbotu() {
-      this.$http.get("getcover").then(result => {
-        if (result.body.status === 1) {
-          this.SwiperImage = result.body.imgs;
+      this.$http.get("api/getlunbo").then(result => {
+        if (result.body.status === 0) {
+          this.SwiperImage = result.body.message;
         } else {
           Toast("获取轮播图图片失败!");
         }
