@@ -22,6 +22,9 @@ import router from './router.js'
 //导入vue-resource 异步请求
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
+//导入Vuex 
+import Vuex from 'vuex'
+Vue.use(Vuex)
 
 // 设置获取Ajax获取数据的默认路径
 Vue.http.options.root = 'http://www.liulongbin.top:3005';
@@ -50,8 +53,33 @@ Vue.filter('dataFormat',function (dataStr,pattern="YYYY-MM-DD HH:mm:ss") {
   //   tapToClose: true,
   //   tapToToggleControls: false
   // })
+
+var store=new Vuex.Store({
+  state:{
+    car:[]
+  },
+  mutations:{
+    addToCar(state,goodsinfo){
+      var flag=false;
+      state.car.some(item =>{
+        if(item.id==goodsinfo.id){
+          item.count+=parseInt(goodsinfo.count);
+          flag=true;
+          return true
+        }
+      })
+      if(!flag){
+        state.car.push(goodsinfo)
+      }
+    }
+  },
+  getters:{}
+
+})
+
 var vm=new Vue({
     el:'#app',
     render:c=> c(app),
-    router
+    router,
+    store
 })

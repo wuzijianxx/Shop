@@ -1,10 +1,6 @@
 <template>
   <div class="goodslist-container">
-    <transition
-        @beforeEnter="beforeEnter"
-        @enter="enter"
-        @afterEnter="afterEnter"
-    >
+    <transition @beforeEnter="beforeEnter" @enter="enter" @afterEnter="afterEnter">
       <div class="ball" v-show="ballFlag" ref="ball"></div>
     </transition>
     <div class="mui-card">
@@ -35,7 +31,6 @@
         </div>
       </div>
     </div>
-
     <div class="mui-card">
       <div class="mui-card-header">商品参数</div>
       <div class="mui-card-content">
@@ -63,7 +58,7 @@ export default {
       id: this.$route.params.id,
       goodsinfo: [],
       ballFlag: false,
-      selectCount:1
+      selectCount: 1
     };
   },
   created() {
@@ -96,26 +91,34 @@ export default {
     },
     addToShopCar() {
       this.ballFlag = !this.ballFlag;
-       document.getElementById('badge').innerHTML=this.selectCount;
+      var goodsinfo = {
+        id: this.id,
+        count: this.selectCount,
+        price: this.goodsinfo.sell_price,
+        selected: true
+      };
+      this.$store.commit('addToCar',goodsinfo)
     },
-    beforeEnter(el){
-        el.style.transform="translate(0,0)"
+    beforeEnter(el) {
+      el.style.transform = "translate(0,0)";
     },
-    enter(el,done){
-        const ballPosition=this.$refs.ball.getBoundingClientRect();
-        const badgePosition=document.getElementById('badge').getBoundingClientRect();
-        const xDist=badgePosition.left - ballPosition.left;
-        const yDist=badgePosition.top - ballPosition.top;
-        el.offsetWidth;
-         el.style.transform=`translate(${xDist}px,${yDist}px)`;
-         el.style.transition="all .7s cubic-bezier(.56,-0.26,1,.46)";
-         done()
+    enter(el, done) {
+      const ballPosition = this.$refs.ball.getBoundingClientRect();
+      const badgePosition = document
+        .getElementById("badge")
+        .getBoundingClientRect();
+      const xDist = badgePosition.left - ballPosition.left;
+      const yDist = badgePosition.top - ballPosition.top;
+      el.offsetWidth;
+      el.style.transform = `translate(${xDist}px,${yDist}px)`;
+      el.style.transition = "all .7s cubic-bezier(.56,-0.26,1,.46)";
+      done();
     },
-    afterEnter(el){
-        this.ballFlag=!this.ballFlag;
+    afterEnter(el) {
+      this.ballFlag = !this.ballFlag;
     },
-    getSelectCount(count){
-        this.selectCount=count;
+    getSelectCount(count) {
+      this.selectCount = count;
     }
   },
   components: {
