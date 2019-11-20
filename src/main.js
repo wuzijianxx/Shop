@@ -37,7 +37,19 @@ Vue.filter('dataFormat',function (dataStr,pattern="YYYY-MM-DD HH:mm:ss") {
   return moment(dataStr).format(pattern)
   })
 
-
+  //导入图片缩略图
+  import VuePreview from 'vue-preview'
+  Vue.use(VuePreview)
+  // Vue.use(VuePreview, {
+  //   mainClass: 'pswp--minimal--dark',
+  //   barsSize: {top: 0, bottom: 0},
+  //   captionEl: false,
+  //   fullscreenEl: false,
+  //   shareEl: false,
+  //   bgOpacity: 0.85,
+  //   tapToClose: true,
+  //   tapToToggleControls: false
+  // })
 var vm=new Vue({
     el:'#app',
     render:c=> c(app),

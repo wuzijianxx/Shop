@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <!-- header 头部区域 -->
-    <header id="header" class="mui-bar mui-bar-nav ">
-			<h1 class="mui-title" id="title">首页</h1>
-		</header>
-
+    <header id="header" class="mui-bar mui-bar-nav">
+      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+      <h1 class="mui-title" id="title">首页</h1>
+    </header>
 
     <!-- main 路由区域 -->
     <transition>
@@ -23,7 +23,7 @@
       </router-link>
       <router-link class="mui-tab-item-list" to="/shopcar">
         <span class="mui-icon mui-icon-extra mui-icon-extra-cart">
-          <span class="mui-badge">0</span>
+          <span class="mui-badge" id="badge">0</span>
         </span>
         <span class="mui-tab-label">购物车</span>
       </router-link>
@@ -36,15 +36,28 @@
 </template>
 
 <script>
+export default {
+  data() {
+    return {};
+  },
+  created() {},
+  methods: {
+    // goBack() {
+    //   this.$router.go(-1);
+    // }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-.mint-header.is-fixed{
+.mint-header.is-fixed {
   z-index: 99;
 }
 .app-container {
   padding-top: 46px;
   overflow-x: hidden;
+  padding-bottom: 50px;
+  touch-action: pan-y;
 }
 
 .v-enter {
@@ -64,30 +77,31 @@
 }
 
 .mui-bar-tab .mui-tab-item-list.mui-active {
-    color: #007aff;
+  color: #007aff;
 }
 .mui-bar-tab .mui-tab-item-list {
-    display: table-cell;
-    overflow: hidden;
-    width: 1%;
-    height: 50px;
-    text-align: center;
-    vertical-align: middle;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: #929292;
+  display: table-cell;
+  overflow: hidden;
+  width: 1%;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #929292;
 }
 .mui-bar-tab .mui-tab-item-list .mui-icon {
-    top: 3px;
-    width: 24px;
-    height: 24px;
-    padding-top: 0;
-    padding-bottom: 0;
+  top: 3px;
+  width: 24px;
+  height: 24px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
-.mui-bar-tab .mui-tab-item-list .mui-icon~.mui-tab-label {
-    font-size: 11px;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.mui-bar-tab .mui-tab-item-list .mui-icon ~ .mui-tab-label {
+  font-size: 11px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
 </style>

@@ -63,7 +63,6 @@ export default {
 <style lang="scss" scoped>
 
 .newlist-container{
-    padding-bottom: 50px;
     position: relative;
 .mui-table-view {
   li {

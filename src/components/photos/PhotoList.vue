@@ -9,7 +9,7 @@
         <div class="mui-scroll">
           <!-- <a  class="mui-control-item mui-active">全部</a> -->
           <a 
-            @click="getPhotoListByCateId(item.id)"
+            @tap="getPhotoListByCateId(item.id)"
             v-for="(item, index) in cates"
             :key="index"
             :class="['mui-control-item',item.id==0 ?'mui-active':'']"
@@ -103,13 +103,15 @@ export default {
 
 <style lang="scss" scoped>
 * {
-  touch-action: pan-x;
   margin: 0;
   padding: 0;
 }
 
 .photo-container {
   padding: 0 5px 50px 5px;
+  .mui-slider{
+    touch-action: pan-y;
+  }
   ul {
     li {
       list-style: none;
