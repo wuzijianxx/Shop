@@ -36,50 +36,115 @@ Vue.http.options.headers = {
 };
 //导入格式化时间的插件
 import moment from 'moment'
-Vue.filter('dataFormat',function (dataStr,pattern="YYYY-MM-DD HH:mm:ss") {
+Vue.filter('dataFormat', function (dataStr, pattern = "YYYY-MM-DD HH:mm:ss") {
   return moment(dataStr).format(pattern)
-  })
+})
 
-  //导入图片缩略图
-  import VuePreview from 'vue-preview'
-  Vue.use(VuePreview)
-  // Vue.use(VuePreview, {
-  //   mainClass: 'pswp--minimal--dark',
-  //   barsSize: {top: 0, bottom: 0},
-  //   captionEl: false,
-  //   fullscreenEl: false,
-  //   shareEl: false,
-  //   bgOpacity: 0.85,
-  //   tapToClose: true,
-  //   tapToToggleControls: false
-  // })
-
-var store=new Vuex.Store({
-  state:{
-    car:[]
+//导入图片缩略图
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview)
+// Vue.use(VuePreview, {
+//   mainClass: 'pswp--minimal--dark',
+//   barsSize: {top: 0, bottom: 0},
+//   captionEl: false,
+//   fullscreenEl: false,
+//   shareEl: false,
+//   bgOpacity: 0.85,
+//   tapToClose: true,
+//   tapToToggleControls: false
+// })
+//先从本地存储中把购物车的数据读取出来
+var car = JSON.parse(localStorage.getItem('car') || '[]');
+var store = new Vuex.Store({
+  state: {
+    car: car
   },
-  mutations:{
-    addToCar(state,goodsinfo){
-      var flag=false;
-      state.car.some(item =>{
-        if(item.id==goodsinfo.id){
-          item.count+=parseInt(goodsinfo.count);
-          flag=true;
+  mutations: {
+    addToCar(state, goodsinfo) {
+      var flag = false;
+      state.car.some(item => {
+        if (item.id == goodsinfo.id) {
+          item.count += parseInt(goodsinfo.count);
+          flag = true;
           return true
         }
       })
-      if(!flag){
+      if (!flag) {
         state.car.push(goodsinfo)
       }
+      //存储到本地存储中
+      localStorage.setItem('car', JSON.stringify(state.car))
+    },
+    updateGoodsInfo(state, goodsinfo) {
+      state.car.some(item => {
+        if (item.id == goodsinfo.id) {
+          item.count = parseInt(goodsinfo.count);
+          return true
+        }
+      })
+      localStorage.setItem('car', JSON.stringify(state.car))
+    },
+    removeFormCar(state, id) {
+      state.car.some((item, i) => {
+        if (item.id == id) {
+          state.car.splice(i, 1);
+          return true
+        }
+      })
+      localStorage.setItem('car', JSON.stringify(state.car))
+    },
+    updateGoodsSelected(state, info) {
+      state.car.some(item => {
+        if (item.id == info.id) {
+          item.selected = info.selected;
+          return true
+        }
+      })
+      localStorage.setItem('car', JSON.stringify(state.car))
     }
   },
-  getters:{}
+  getters: {
+    getAllCount(state) {
+      var c = 0;
+      state.car.forEach(item => {
+        c += item.count;
+      })
+      return c;
+    },
+    getGoodsCount(state) {
+      var o = {};
+      state.car.forEach(item => {
+        o[item.id] = item.count
+      })
+      return o
+    },
+    getGoodsSelected(state) {
+      var o = {};
+      state.car.forEach(item => {
+        o[item.id] = item.selected
+      })
+      return o
+    },
+    getGoodsCountAndAmount(state) {
+      var o = {
+        count :0,
+        amount : 0
+      }
+      state.car.forEach(item => {
+        if (item.selected) {
+          o.count += item.count;
+          o.amount += item.price * item.count;
+        }
+      })
+      return o
+    }
+  }
 
 })
 
-var vm=new Vue({
-    el:'#app',
-    render:c=> c(app),
-    router,
-    store
+var vm = new Vue({
+  el: '#app',
+  render: c => c(app),
+  router,
+  store
 })

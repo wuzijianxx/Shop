@@ -38,12 +38,31 @@ export default {
     color: #24a2ff;
     font-size: 15px;
   }
-  .content {
+  /deep/ .content {
     margin: 0 5px;
-    /deep/  img {
+    img{
+        width: 100%;
+    }
+      p{
+      margin-bottom: 0;
+      img {
         width: 100%;
         height: 100%;
         display: block;
+    }
+    }
+   table{
+      width: 100%;
+      img{
+        width: 100%;
+        height: 150px;
+        display: block;
+      }
+    }
+    .ke-zeroborder{
+      td{
+        width: 10%;
+      }
     }
   }
 }
