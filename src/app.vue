@@ -9,7 +9,9 @@
 
     <!-- main 路由区域 -->
     <transition>
+      <keep-alive>
       <router-view></router-view>
+      </keep-alive>
     </transition>
 
     <!-- footer 底部区域 -->
